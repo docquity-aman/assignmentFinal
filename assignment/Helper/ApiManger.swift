@@ -9,11 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-enum DataError:Error{
-    case invalidResponse
-    case invalidData
-    case network(_ error:Error?)
-}
+
 
 //typealias Handler=(Result<GifModel,DataError>)->Void
 

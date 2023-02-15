@@ -15,30 +15,27 @@ final class HomeViewModel:ObservableObject{
 //    print(self.gifModel)
     //GIPHY
      func fetchGif(){
-       return APIManger.shared.fetchGif()
+        APIManger.shared.fetchGif()
              .receive(on: DispatchQueue.main)
              .sink(receiveCompletion:{ (completion) in
             switch completion{
             case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
+                    print("Home View Model:Error is \(err.localizedDescription)")
             case .finished:
-                    print("Finished Home View Model")
+                    print("Home View Model:Finished Home View Model")
+               
                     
             }
         }, receiveValue: {[weak self] gifModel in
             self?.gifModel=gifModel
+            self?.gifDataModel=gifModel.data
          }
         ).store(in: &cancellables)
 
     }
     
 }
-
+//core data
 extension HomeViewModel{
-    enum Event{
-        case loading
-        case dataloading
-        case stoploading
-        case error(Error?)
-    }
+   
 }
