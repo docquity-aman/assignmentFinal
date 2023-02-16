@@ -8,34 +8,34 @@
 import Foundation
 import Combine
 final class HomeViewModel:ObservableObject{
-
+    
     @Published var gifModel:GifModel?
     var gifDataModel:[DataValue]!
     private var cancellables = Set<AnyCancellable>()
-//    print(self.gifModel)
+    //    print(self.gifModel)
     //GIPHY
-     func fetchGif(){
+    func fetchGif(){
         APIManger.shared.fetchGif()
-             .receive(on: DispatchQueue.main)
-             .sink(receiveCompletion:{ (completion) in
-            switch completion{
-            case .failure(let err):
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion:{ (completion) in
+                switch completion{
+                case .failure(let err):
                     print("Home View Model:Error is \(err.localizedDescription)")
-            case .finished:
+                case .finished:
                     print("Home View Model:Finished Home View Model")
-               
                     
+                    
+                }
+            }, receiveValue: {[weak self] gifModel in
+                self?.gifModel=gifModel
+                self?.gifDataModel=gifModel.data
             }
-        }, receiveValue: {[weak self] gifModel in
-            self?.gifModel=gifModel
-            self?.gifDataModel=gifModel.data
-         }
-        ).store(in: &cancellables)
-
+            ).store(in: &cancellables)
+        
     }
     
 }
 //core data
 extension HomeViewModel{
-   
+    
 }

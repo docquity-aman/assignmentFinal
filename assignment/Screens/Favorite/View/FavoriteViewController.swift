@@ -21,18 +21,18 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
         favoriteCollectionView.reloadData()
         
         
-
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         models=DbService.shareInstance.getAllItem()
         DispatchQueue.main.async {
             self.favoriteCollectionView.reloadData()
-
+            
         }
         
     }
-   
+    
 }
 extension FavoriteViewController:UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -52,16 +52,15 @@ extension FavoriteViewController:UICollectionViewDelegate,UICollectionViewDataSo
         favCell.favoriteImageView.sd_setImage(with:imageURL , placeholderImage:    UIImage(imageLiteralResourceName: "emptyImage"),options:.continueInBackground,completed: nil)
         favCell.favoriteImageView.contentMode = .scaleAspectFill
         favCell.favoriteImageView.layer.cornerRadius=5
-        
-//        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
-//        longPressGesture.minimumPressDuration = 2
-//        longPressGesture.delaysTouchesBegan = true
         tapGestures = UITapGestureRecognizer(target: self, action: #selector(didTripleTap(_:)))
         tapGestures.numberOfTapsRequired = 3
         favCell.addGestureRecognizer(tapGestures)
-      
+        
         return favCell
     }
+}
+
+extension FavoriteViewController{
     @objc func didTripleTap(_ gesture: UITapGestureRecognizer) {
         deleteButton(gesture)
         let tap = gesture.location(in: self.favoriteCollectionView)
@@ -74,10 +73,10 @@ extension FavoriteViewController:UICollectionViewDelegate,UICollectionViewDataSo
             DbService.shareInstance.deleteItem(item: item)
             self.models=DbService.shareInstance.getAllItem()
             self.favoriteCollectionView.reloadData()
-           }
-       
-        
         }
+        
+        
+    }
     
     func deleteButton(_ gesture: UITapGestureRecognizer){
         let trash=UIImageView(image: UIImage(systemName: "trash.fill"))
@@ -88,15 +87,21 @@ extension FavoriteViewController:UICollectionViewDelegate,UICollectionViewDataSo
         
         trash.center = CGPoint(x: gesture.view!.frame.size.width  / 2,
                                y: gesture.view!.frame.size.height / 2)
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
+     
+        
             UIView.animate(withDuration: 0.5, animations: {
                 trash.alpha=0
             },completion: {done in
                 if done{
-                    trash.removeFromSuperview()
+                    UIView.animate(withDuration: 0.5, animations: {trash.alpha=0},completion: {
+                        done in
+                        if done{
+                            trash.removeFromSuperview()
+                        }
+                    })
+                    
                 }
             })
-        })
+//        })
     }
-    
 }

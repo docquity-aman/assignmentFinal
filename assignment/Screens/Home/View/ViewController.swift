@@ -21,25 +21,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-         configuration()
+        configuration()
         // Do any additional setup after loading the view.
     }
-
-
+    
+    
 }
 
 extension ViewController {
     func configuration() {
         initViewModel()
         homeViewModel.fetchGif()
-
+        
     }
     
     func  initViewModel() {
         homeViewModel.$gifModel
             .sink(receiveValue:{
-            [weak self] gifModel in
-            self?.gifModel=gifModel
+                [weak self] gifModel in
+                self?.gifModel=gifModel
                 let datav=gifModel?.data
                 self?.dataModel=datav
                 DispatchQueue.main.async {
@@ -48,7 +48,7 @@ extension ViewController {
             }).store(in: &self.cancellables)
         
         
-
+        
     }
 }
 
@@ -62,9 +62,9 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell=collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CollectionViewCell
-              else  {
+        else  {
             return UICollectionViewCell()
-                }
+        }
         guard let imageURL=self.dataModel?[indexPath.row].images.downsizedMedium.url else{
             cell.gifImageView.image=UIImage(imageLiteralResourceName: "emptyImage")
             return cell;
@@ -77,16 +77,15 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
         tapGestures = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         tapGestures.numberOfTapsRequired = 2
         cell.addGestureRecognizer(tapGestures)
-//        cell.add
-        
-
         return cell
         
     }
+    
+    
+}
+
+extension ViewController{
     @objc func didDoubleTap(_ gesture: UITapGestureRecognizer) {
-        guard let gestureView=gesture.view else{
-            return
-        }
         let tap = gesture.location(in: self.collectionView)
         let idx : NSIndexPath = self.collectionView.indexPathForItem(at: tap)! as NSIndexPath
         print("Double tapped",idx.row)
@@ -94,19 +93,19 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
         items.title=self.dataModel?[idx.row].title
         items.width=Int16(self.dataModel![idx.row].images.downsizedMedium.width)!
         items.height=Int16(self.dataModel![idx.row].images.downsizedMedium.height)!
-        var dataurl=self.dataModel![idx.row].images.downsizedMedium.url
+        let dataurl=self.dataModel![idx.row].images.downsizedMedium.url
         items.url = URL(string: dataurl)
         DbService.shareInstance.createItem(title: items.title!, id: items.id! , width: items.width, height: items.height, url: items.url!)
-
+        
         likeButton(gesture: gesture)
-       
-        }
+        
+    }
     
     
     func likeButton(gesture: UITapGestureRecognizer){
         print("like")
         let heart=UIImageView(image: UIImage(systemName: "heart.fill"))
-        heart.tintColor = .red
+        heart.tintColor = .systemPink
         gesture.view?.addSubview(heart)
         let size=gesture.view!.frame.size.width/4
         heart.tintColor = .red
@@ -114,15 +113,20 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
         heart.center = CGPoint(x: gesture.view!.frame.size.width  / 2,
                                y: gesture.view!.frame.size.height / 2)
         
-        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
-            UIView.animate(withDuration: 0.5, animations: {
-                heart.alpha=0
-            },completion: {done in
-                if done{
-                    heart.removeFromSuperview()
-                }
-            })
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            heart.alpha=0
+        },completion: {done in
+            if done{
+                UIView.animate(withDuration: 0.5, animations: {heart.alpha=0},completion: {
+                    done in
+                    if done{
+                        heart.removeFromSuperview()
+                    }
+                })
+                
+            }
         })
+  
     }
-    
 }

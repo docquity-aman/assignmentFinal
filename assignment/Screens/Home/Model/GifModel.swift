@@ -18,7 +18,7 @@ struct DataValue:Codable{
     var type, id: String
     var images: Images
     var title:String
-   
+    
     
 }
 
@@ -26,18 +26,18 @@ struct DataValue:Codable{
 struct Meta:Codable{
     var status: Int
     var msg, responseID: String
-
+    
     enum CodingKeys: String, CodingKey {
         case status, msg
         case responseID = "response_id"
     }
-
+    
 }
 
 
 struct Pagination:Codable{
     var totalCount, count, offset: Int
-
+    
     enum CodingKeys: String, CodingKey {
         case totalCount = "total_count"
         case count, offset
@@ -53,5 +53,5 @@ struct Images:Codable{
 }
 struct DownSizeMedium:Codable{
     var height, width, size: String
-        var url: String
+    var url: String
 }

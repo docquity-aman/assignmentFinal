@@ -17,38 +17,47 @@ class DbService{
     func getAllItem()->[FavoriteItems]{
         do{
             models = try context.fetch(FavoriteItems.fetchRequest()) 
-//            print("Models: ",models)
+            //            print("Models: ",models)
             
         }catch{
             //error
             print ("Data Not Found")
-            
         }
-//        print(models)
         return models
         
     }
     
     func createItem(title:String,id:String,width:Int16,height:Int16,url:URL){
-        let newItem = FavoriteItems(context: context)
-        newItem.title = title
-        newItem.date=Date()
-        newItem.url=url
-        newItem.width=width
-        newItem.height=height
-        newItem.id=id
+        let fetchRequest: NSFetchRequest<FavoriteItems>
+                fetchRequest = FavoriteItems.fetchRequest()
+                fetchRequest.predicate = NSPredicate(
+                    format: "id = %@",id
+                )
+
+      
         do{
+            let objects = try context.fetch(fetchRequest)
+            if(!objects.isEmpty){
+                print("found : ",objects)
+                                return
+            }
+            else{
+                let newItem = FavoriteItems(context: context)
+                newItem.title = title
+                newItem.date=Date()
+                newItem.url=url
+                newItem.width=width
+                newItem.height=height
+                newItem.id=id
+            }
             try context.save()
-            getAllItem()
         }catch{
-            
+            print("Saving Error")
         }
     }
     
     func deleteItem(item:FavoriteItems){
         context.delete(item)
-        getAllItem()
-        
         do{
             try context.save()
         }catch{
@@ -57,5 +66,5 @@ class DbService{
     }
     
     
-
+    
 }
