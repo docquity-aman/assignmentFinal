@@ -37,8 +37,6 @@ class DbService{
         newItem.width=width
         newItem.height=height
         newItem.id=id
-        
-        
         do{
             try context.save()
             getAllItem()
@@ -50,6 +48,12 @@ class DbService{
     func deleteItem(item:FavoriteItems){
         context.delete(item)
         getAllItem()
+        
+        do{
+            try context.save()
+        }catch{
+            
+        }
     }
     
     

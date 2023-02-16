@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lwg-Vf-ibY">
-                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gTI-Ba-dNa">
                                     <size key="itemSize" width="176" height="250"/>
@@ -60,14 +60,27 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="2ue-1Z-gPy"/>
                                 </connections>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdm-g9-fQL">
+                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Home" id="AjP-85-F6Z"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Wdm-g9-fQL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="79m-lU-fG7"/>
+                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="top" secondItem="Wdm-g9-fQL" secondAttribute="bottom" id="LVC-Wi-G4K"/>
                             <constraint firstItem="Lwg-Vf-ibY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NI9-AH-Ulk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Lwg-Vf-ibY" secondAttribute="trailing" id="RGA-jP-F3S"/>
+                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="top" secondItem="Wdm-g9-fQL" secondAttribute="bottom" id="Sm0-IP-tdm"/>
+                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="gjP-Y8-DYq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Lwg-Vf-ibY" secondAttribute="bottom" id="kkx-4V-Zby"/>
-                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zhg-YR-PLh"/>
+                            <constraint firstItem="Wdm-g9-fQL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="p5b-uf-3qE"/>
+                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pTe-Jt-FK7"/>
+                            <constraint firstItem="Wdm-g9-fQL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qnU-OZ-8Ac"/>
+                            <constraint firstItem="Lwg-Vf-ibY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="uj9-Zf-tOl"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="homekit" catalog="system" id="8y9-yr-zvM"/>
@@ -107,7 +120,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qbr-y4-qBS">
-                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VfC-1t-hgI">
                                     <size key="itemSize" width="160" height="226"/>
@@ -149,14 +162,27 @@
                                     <outlet property="delegate" destination="Kr6-jw-rzp" id="tpL-if-ekK"/>
                                 </connections>
                             </collectionView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KjA-EP-FyF">
+                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Favorites" id="yXr-v9-80V"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a4w-sP-tgh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="KjA-EP-FyF" firstAttribute="trailing" secondItem="a4w-sP-tgh" secondAttribute="trailing" id="0SL-c6-gr7"/>
+                            <constraint firstItem="qbr-y4-qBS" firstAttribute="top" secondItem="KjA-EP-FyF" secondAttribute="bottom" id="1uv-fl-yqm"/>
+                            <constraint firstItem="qbr-y4-qBS" firstAttribute="trailing" secondItem="a4w-sP-tgh" secondAttribute="trailing" id="5Yo-M8-Oaf"/>
+                            <constraint firstItem="qbr-y4-qBS" firstAttribute="leading" secondItem="a4w-sP-tgh" secondAttribute="leading" id="CGb-vx-LI9"/>
+                            <constraint firstItem="qbr-y4-qBS" firstAttribute="top" secondItem="KjA-EP-FyF" secondAttribute="bottom" id="IXK-Od-nJs"/>
                             <constraint firstItem="a4w-sP-tgh" firstAttribute="bottom" secondItem="qbr-y4-qBS" secondAttribute="bottom" id="SdQ-IK-rIf"/>
                             <constraint firstItem="a4w-sP-tgh" firstAttribute="trailing" secondItem="qbr-y4-qBS" secondAttribute="trailing" id="V4g-D2-Lr6"/>
                             <constraint firstItem="qbr-y4-qBS" firstAttribute="leading" secondItem="a4w-sP-tgh" secondAttribute="leading" id="ZnI-fW-snx"/>
-                            <constraint firstItem="qbr-y4-qBS" firstAttribute="top" secondItem="a4w-sP-tgh" secondAttribute="top" id="kyf-OA-R4P"/>
+                            <constraint firstItem="qbr-y4-qBS" firstAttribute="bottom" secondItem="a4w-sP-tgh" secondAttribute="bottom" id="bWN-XF-rsV"/>
+                            <constraint firstItem="KjA-EP-FyF" firstAttribute="leading" secondItem="a4w-sP-tgh" secondAttribute="leading" id="siS-aS-p2g"/>
+                            <constraint firstItem="KjA-EP-FyF" firstAttribute="top" secondItem="a4w-sP-tgh" secondAttribute="top" id="tUS-rR-BpQ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favorites" image="heart.fill" catalog="system" id="Mt2-ha-kab"/>

@@ -96,9 +96,8 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
         items.height=Int16(self.dataModel![idx.row].images.downsizedMedium.height)!
         var dataurl=self.dataModel![idx.row].images.downsizedMedium.url
         items.url = URL(string: dataurl)
-        
         DbService.shareInstance.createItem(title: items.title!, id: items.id! , width: items.width, height: items.height, url: items.url!)
-        DbService.shareInstance.getAllItem()
+
         likeButton(gesture: gesture)
        
         }
@@ -107,10 +106,13 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
     func likeButton(gesture: UITapGestureRecognizer){
         print("like")
         let heart=UIImageView(image: UIImage(systemName: "heart.fill"))
-        heart.frame=CGRect(x:0,y:0,width: (gesture.view?.frame.size.width)!/4,height: (gesture.view?.frame.size.height)!/4)
         heart.tintColor = .red
-        heart.center=gesture.view!.center
         gesture.view?.addSubview(heart)
+        let size=gesture.view!.frame.size.width/4
+        heart.tintColor = .red
+        heart.frame=CGRect(x: ((gesture.view?.frame.size.height)!)/3, y: ((gesture.view?.frame.size.width)!)/4, width: size, height: size)
+        heart.center = CGPoint(x: gesture.view!.frame.size.width  / 2,
+                               y: gesture.view!.frame.size.height / 2)
         
         DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
             UIView.animate(withDuration: 0.5, animations: {
