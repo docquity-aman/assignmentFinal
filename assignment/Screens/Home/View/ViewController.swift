@@ -10,21 +10,38 @@ import Combine
 import SDWebImage
 
 class ViewController: UIViewController {
-    private var cancellables = [AnyCancellable]()
-    private var homeViewModel=HomeViewModel()
-    private var gifModel:GifModel?
-    var dataModel:[DataValue]?
+    private  var cancellables = Set<AnyCancellable>()
+    private  var homeViewModel=HomeViewModel()
+    private var dataModel:[DataValue]?
+    
     private var tapGestures:UITapGestureRecognizer!
     private var models=[FavoriteItems]()
-    var items:FavoriteModel=FavoriteModel()
+    private var items:FavoriteModel=FavoriteModel()
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var cardViewLayoutButton: UIBarButtonItem!
+    @IBOutlet private weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         configuration()
+        
+
         // Do any additional setup after loading the view.
     }
     
+ 
+    
+    
+    var flag:Bool=false
+    
+    @IBAction func cardChangeLayoutButton(_ sender: Any) {
+        flag = !flag
+        collectionView.reloadData()
+    }
+    
+    deinit{
+        debugPrint("Deinit: Home View Controller....")
+        print("Deinit: Home View Controller....")
+    }
     
 }
 
@@ -39,22 +56,23 @@ extension ViewController {
         homeViewModel.$gifModel
             .sink(receiveValue:{
                 [weak self] gifModel in
-                self?.gifModel=gifModel
                 let datav=gifModel?.data
                 self?.dataModel=datav
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                 }
             }).store(in: &self.cancellables)
-        
+        collectionView.collectionViewLayout=UICollectionViewFlowLayout()
         
         
     }
+    
+    
 }
 
-extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = gifModel?.data.count else{
+        guard let count = self.dataModel?.count else{
             return 1
         }
         return count
@@ -69,6 +87,9 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UIC
             cell.gifImageView.image=UIImage(imageLiteralResourceName: "emptyImage")
             return cell;
         }
+
+        
+        //add gif
         cell.gifImageView.sd_imageIndicator=SDWebImageActivityIndicator.gray
         cell.gifImageView.sd_imageIndicator?.startAnimatingIndicator()
         cell.gifImageView.sd_setImage(with: URL(string: imageURL) , placeholderImage:    UIImage(imageLiteralResourceName: "emptyImage"),options:.continueInBackground,completed: nil)
@@ -127,6 +148,53 @@ extension ViewController{
                 
             }
         })
-  
+        
     }
+    
+}
+
+extension ViewController:UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var spacing:CGFloat
+        var numberOfItemsPerRow:CGFloat
+        var spacingBetweenCells:CGFloat
+        if(flag){
+            spacing=1
+            numberOfItemsPerRow=1
+            spacingBetweenCells=1
+            
+        }else{
+            spacing=2
+            numberOfItemsPerRow=2
+            spacingBetweenCells=2
+            
+        }
+        
+        let totalSpacing = (2 * spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells)
+        //Amount of total spacing in a row
+        if let collection = self.collectionView{
+            let width = (collection.bounds.width - totalSpacing)/numberOfItemsPerRow
+            return CGSize(width: width, height: width)
+        }else{
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return  1;
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right:1)
+    }
+}
+
+
+extension ViewController{
 }

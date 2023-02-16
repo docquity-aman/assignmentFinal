@@ -17,20 +17,34 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        favoriteCollectionView.collectionViewLayout=UICollectionViewFlowLayout()
         models=DbService.shareInstance.getAllItem()
         favoriteCollectionView.reloadData()
+        
         
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        favoriteCollectionView.collectionViewLayout=UICollectionViewFlowLayout()
         models=DbService.shareInstance.getAllItem()
         DispatchQueue.main.async {
             self.favoriteCollectionView.reloadData()
             
         }
         
+    }
+
+    var flag:Bool=false
+    @IBAction private func favoriteCardViewChangeaLayout(_ sender: Any) {
+        flag = !flag
+        favoriteCollectionView.reloadData()
+    }
+    
+    deinit{
+        debugPrint("Deinit: Favorite View Controller....")
+        print("deallocated...")
     }
     
 }
@@ -102,6 +116,46 @@ extension FavoriteViewController{
                     
                 }
             })
-//        })
+
     }
 }
+
+extension FavoriteViewController:UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var spacing:CGFloat
+        var numberOfItemsPerRow:CGFloat
+        var spacingBetweenCells:CGFloat
+        if(flag){
+            spacing=1
+            numberOfItemsPerRow = 1
+            spacingBetweenCells = 1
+        }else{
+            spacing=2
+            numberOfItemsPerRow=2
+            spacingBetweenCells=2
+        }
+        
+        let totalSpacing = (2 * spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells) //Amount of total spacing in a row
+        if let collection = self.favoriteCollectionView{
+            let width = (collection.bounds.width - totalSpacing)/numberOfItemsPerRow
+            return CGSize(width: width, height: width)
+        }else{
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5;
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right:1)
+    }
+}
+

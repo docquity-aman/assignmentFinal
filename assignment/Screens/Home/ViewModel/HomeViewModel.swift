@@ -35,7 +35,4 @@ final class HomeViewModel:ObservableObject{
     }
     
 }
-//core data
-extension HomeViewModel{
-    
-}
+

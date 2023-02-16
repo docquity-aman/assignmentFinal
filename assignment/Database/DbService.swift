@@ -12,7 +12,7 @@ import UIKit
 class DbService{
     static let shareInstance = DbService()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var models=[FavoriteItems]()
+    private var models=[FavoriteItems]()
     
     func getAllItem()->[FavoriteItems]{
         do{
@@ -38,7 +38,7 @@ class DbService{
         do{
             let objects = try context.fetch(fetchRequest)
             if(!objects.isEmpty){
-                print("found : ",objects)
+                print("found : ",objects.count)
                                 return
             }
             else{
@@ -66,5 +66,7 @@ class DbService{
     }
     
     
-    
+    deinit {
+        print("Db Service Deinitialized..")
+    }
 }

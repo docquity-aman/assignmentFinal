@@ -63,7 +63,13 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdm-g9-fQL">
                                 <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Home" id="AjP-85-F6Z"/>
+                                    <navigationItem title="Home" id="AjP-85-F6Z">
+                                        <barButtonItem key="rightBarButtonItem" title="Card" id="zg5-tQ-hOL">
+                                            <connections>
+                                                <action selector="cardChangeLayoutButton:" destination="BYZ-38-t0r" id="cnq-1k-iUA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -165,7 +171,14 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KjA-EP-FyF">
                                 <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                                 <items>
-                                    <navigationItem title="Favorites" id="yXr-v9-80V"/>
+                                    <navigationItem title="Favorites" id="yXr-v9-80V">
+                                        <barButtonItem key="rightBarButtonItem" title="Card" id="aj2-gR-qrB">
+                                            <inset key="largeContentSizeImageInsets" minX="1" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="favoriteCardViewChangeaLayout:" destination="Kr6-jw-rzp" id="w7k-4P-9dZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
