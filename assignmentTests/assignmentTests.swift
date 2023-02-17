@@ -7,6 +7,8 @@
 
 import XCTest
 @testable import assignment
+@testable import SDWebImage
+import Combine
 
 final class assignmentTests: XCTestCase {
 
@@ -32,5 +34,27 @@ final class assignmentTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func test() throws{
+        let viewModel=HomeViewModel()
+//        let spy=ValueSpy(viewModel.$gifModel)
+
+        
+    }
+    
 
 }
+
+//private class ValueSpy{
+//    private(set) var values=[GifModel]()
+//    private var cancellables:AnyCancellable?
+//
+//    init(_ @Published publisher: GifModel){
+//        cancellables=publisher.sink(receiveValue: {
+//            [weak self] value in
+//            self?.values.append(value)
+//        })
+//    }
+//
+//}
+
