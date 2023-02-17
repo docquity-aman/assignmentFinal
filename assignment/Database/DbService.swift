@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 class DbService{
-    static let shareInstance = DbService()
+//    static let shareInstance = DbService()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var models=[FavoriteItems]()
     

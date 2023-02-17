@@ -13,10 +13,10 @@ import UIKit
 
 //typealias Handler=(Result<GifModel,DataError>)->Void
 
-final class APIManger{
+final public class APIManger{
     private var cancellables = Set<AnyCancellable>()
-    static let shared=APIManger()
-    private init(){}
+//    static let shared=APIManger()
+//    private init(){}
 
     //Using Combine
     func fetchGif() -> Future<GifModel,Error>{

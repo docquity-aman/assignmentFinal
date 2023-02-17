@@ -119,7 +119,7 @@ extension ViewController{
         items.height=Int16(self.dataModel![idx.row].images.downsizedMedium.height)!
         let dataurl=self.dataModel![idx.row].images.downsizedMedium.url
         items.url = URL(string: dataurl)
-        DbService.shareInstance.createItem(title: items.title!, id: items.id! , width: items.width, height: items.height, url: items.url!)
+        homeViewModel.dbService.createItem(title: items.title!, id: items.id! , width: items.width, height: items.height, url: items.url!)
         
         likeButton(gesture: gesture)
         

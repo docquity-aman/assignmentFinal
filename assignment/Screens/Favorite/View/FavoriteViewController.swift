@@ -7,22 +7,34 @@
 
 import UIKit
 import SDWebImage
+ 
+class FavoriteViewModel{
+    var dbService:DbService!
+    init(dbService:DbService=DbService()){
+        self.dbService=dbService
+    }
+}
 
 class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
+ 
     @Published private var models=[FavoriteItems]()
+    private var favoriteViewModel=FavoriteViewModel()
+    
     private var longPressGesture:UILongPressGestureRecognizer!
     private var tapGestures:UITapGestureRecognizer!
-    
+   
+
     @IBOutlet weak var favoriteCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+             
         favoriteCollectionView.collectionViewLayout=UICollectionViewFlowLayout()
-        models=DbService.shareInstance.getAllItem()
+        models=self.favoriteViewModel.dbService.getAllItem()
         favoriteCollectionView.reloadData()
         
 
-        
+
         
         
         
@@ -30,7 +42,7 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         favoriteCollectionView.collectionViewLayout=UICollectionViewFlowLayout()
-        models=DbService.shareInstance.getAllItem()
+        models=self.favoriteViewModel.dbService.getAllItem()
         DispatchQueue.main.async {
             self.favoriteCollectionView.reloadData()
             
@@ -47,6 +59,8 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
         favoriteCollectionView.reloadData()
     }
     
+ 
+ 
     deinit{
         debugPrint("Deinit: Favorite View Controller....")
         print("deallocated...")
@@ -89,8 +103,8 @@ extension FavoriteViewController{
         print("Triple Tap : ",index.row)
         let item = models[index.row]
         DispatchQueue.main.asyncAfter(deadline: .now()+0.8){
-            DbService.shareInstance.deleteItem(item: item)
-            self.models=DbService.shareInstance.getAllItem()
+            self.favoriteViewModel.dbService.deleteItem(item: item)
+            self.models=self.favoriteViewModel.dbService.getAllItem()
             self.favoriteCollectionView.reloadData()
         }
         

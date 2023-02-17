@@ -8,6 +8,12 @@
 import Foundation
 import Combine
 final class HomeViewModel:ObservableObject{
+    var apiManager:APIManger!
+    var dbService:DbService!
+    init(apiManager:APIManger=APIManger(),dbService:DbService=DbService()){
+        self.apiManager=apiManager
+        self.dbService=dbService
+    }
     
     @Published var gifModel:GifModel?
     var gifDataModel:[DataValue]!
@@ -15,7 +21,7 @@ final class HomeViewModel:ObservableObject{
     //    print(self.gifModel)
     //GIPHY
     func fetchGif(){
-        APIManger.shared.fetchGif()
+        self.apiManager.fetchGif()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion:{ (completion) in
                 switch completion{

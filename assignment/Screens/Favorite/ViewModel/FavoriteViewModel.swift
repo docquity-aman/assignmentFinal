@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
-final class FavoriteViewModel:ObservableObject{
-    
-}
+//
+//final class FavoriteViewModel:ObservableObject{
+//    
+//}
 
