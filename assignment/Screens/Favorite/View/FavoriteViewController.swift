@@ -21,6 +21,8 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
         models=DbService.shareInstance.getAllItem()
         favoriteCollectionView.reloadData()
         
+
+        
         
         
         
@@ -35,8 +37,11 @@ class FavoriteViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
     }
+    public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.favoriteCollectionView?.reloadData()
+        }
 
-    var flag:Bool=false
+    private var flag:Bool=false
     @IBAction private func favoriteCardViewChangeaLayout(_ sender: Any) {
         flag = !flag
         favoriteCollectionView.reloadData()

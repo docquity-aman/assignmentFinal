@@ -23,15 +23,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configuration()
-        
-
         // Do any additional setup after loading the view.
     }
+    public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        print("Value: ",self.collectionView.accessibilityElementCount())
+//        guard
+        self.collectionView?.reloadData()
+        }
     
  
     
     
-    var flag:Bool=false
+    private var flag:Bool=false
     
     @IBAction func cardChangeLayoutButton(_ sender: Any) {
         flag = !flag

@@ -18,7 +18,7 @@ final class APIManger{
     static let shared=APIManger()
     private init(){}
 
-    //Using Combile
+    //Using Combine
     func fetchGif() -> Future<GifModel,Error>{
         return Future<GifModel,Error>{
             [weak self] promise in
